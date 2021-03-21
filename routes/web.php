@@ -47,10 +47,11 @@ Route::post('/export', function () {
                 $r = json_decode($r->getBody());
                 $r = $r->pois;
 
+
                 $string = '';
 
                 foreach($r as $kk => $vv){
-                    $string .= $vv->name;
+                    $string .= $vv->name ."-" . $vv->distance . '米';
                     $string .= ",";
                 }
 
