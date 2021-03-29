@@ -14,9 +14,14 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Input;
 use App\Imports\PoisImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Pois;
 
 Route::prefix('api')->group(function () {
     Route::post('import', function () {
+
+        $pois = new Pois();
+
+        DB::table('pois')->truncate();
 
         //上传excel
     $file = Input::file('e_file');
