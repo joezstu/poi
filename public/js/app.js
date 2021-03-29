@@ -1698,9 +1698,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      fileList: [],
+      myHeaders: {
+        'X-CSRF-TOKEN': document.getElementById('_token').content
+      },
+      e_file: 'e_file'
+    };
+  },
+  methods: {
+    handleRemove: function handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview: function handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed: function handleExceed(files, fileList) {
+      this.$message.warning('已上传');
+    },
+    beforeRemove: function beforeRemove(file, fileList) {
+      return this.$confirm("\u786E\u5B9A\u79FB\u9664 ".concat(file.name, "\uFF1F"));
+    },
+    changeButton: function changeButton(res) {
+      console.log(res);
+    }
   }
 });
 
@@ -62587,31 +62611,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _vm._v(
-                "\n                    I'm an example component.\n                    "
-              ),
-              _c("router-link", { attrs: { to: { name: "hello" } } }, [
-                _vm._v("Hello World")
-              ])
-            ],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
+  return _c(
+    "el-upload",
+    {
+      staticClass: "upload-demo",
+      attrs: {
+        action: "/api/import",
+        headers: _vm.myHeaders,
+        "on-preview": _vm.handlePreview,
+        "on-remove": _vm.handleRemove,
+        "before-remove": _vm.beforeRemove,
+        limit: 1,
+        name: _vm.e_file,
+        "on-exceed": _vm.handleExceed,
+        "on-success": _vm.changeButton,
+        "file-list": _vm.fileList
+      }
+    },
+    [
+      _c("el-button", { attrs: { size: "small", type: "primary" } }, [
+        _vm._v("点击上传")
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "el-upload__tip", attrs: { slot: "tip" }, slot: "tip" },
+        [_vm._v("只能上传jpg/png文件，且不超过500kb")]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

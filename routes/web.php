@@ -12,6 +12,22 @@
 */
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Input;
+use App\Imports\PoisImport;
+use Maatwebsite\Excel\Facades\Excel;
+
+Route::prefix('api')->group(function () {
+    Route::post('import', function () {
+
+        //上传excel
+    $file = Input::file('e_file');
+
+    $realPath = $file->store('temp');
+
+
+    Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
+    });
+});
+
 
 Route::get('/{any}',function(){
     return view('welcome', ['name' => 'James']);
