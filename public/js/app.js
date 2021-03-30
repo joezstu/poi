@@ -64658,7 +64658,7 @@ var render = function() {
     {
       staticClass: "upload-demo",
       attrs: {
-        action: "http://www.poi.com/api/import",
+        action: "/api/import",
         headers: _vm.myHeaders,
         "on-preview": _vm.handlePreview,
         "on-remove": _vm.handleRemove,
