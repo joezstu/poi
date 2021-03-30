@@ -1,18 +1,19 @@
 <template>
     <el-upload
         class="upload-demo"
-        action="/api/import"
+        action="http://www.poi.com/api/import"
         :headers="myHeaders"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
         :before-remove="beforeRemove"
         :limit="1"
         :name="e_file"
+        :showProcess="1"
         :on-exceed="handleExceed"
-        :on-success="changeButton"
+        :on-change="handleChange"
+        :on-success="handleSuccess"
         :file-list="fileList">
         <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
 
 </template>
@@ -24,11 +25,13 @@ export default {
             fileList: [],
             myHeaders:{ 'X-CSRF-TOKEN': document.getElementById('_token').content },
             e_file: 'e_file',
+            showProcess:0,
+            processLength:0,
         };
     },
     methods: {
         handleRemove(file, fileList) {
-            console.log(file, fileList);
+            console.log(888,file, fileList);
         },
         handlePreview(file) {
             console.log(file);
@@ -41,6 +44,13 @@ export default {
         },
         changeButton(res){
             console.log(res);
+        },
+        handleChange(file,fileList){
+            file.percentage = 50
+            console.log(999,this,file,fileList)
+        },
+        handleSuccess(res,file,fileList){
+            console.log(123,typeof(res),res,file,fileList)
         }
     }
 }

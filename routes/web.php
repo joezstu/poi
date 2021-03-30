@@ -16,21 +16,34 @@ use App\Imports\PoisImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Pois;
 
+
 Route::prefix('api')->group(function () {
     Route::post('import', function () {
 
-        $pois = new Pois();
+//        $pois = new Pois();
+//
+//        DB::table('pois')->truncate();
+//
+//        //上传excel
+//    $file = Input::file('e_file');
 
-        DB::table('pois')->truncate();
+//    $realPath = $file->store('temp');
 
-        //上传excel
-    $file = Input::file('e_file');
+        $arr = [
+            [
+                'name'  =>  '张三',
+            ],
+            [
+                'name'  =>  '李四'
+            ]
+        ];
 
-    $realPath = $file->store('temp');
-
+        return json_encode($arr);
 
     Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
     });
+
+
 });
 
 
