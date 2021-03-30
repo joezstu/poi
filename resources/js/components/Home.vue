@@ -1,7 +1,7 @@
 <template>
     <el-upload
         class="upload-demo"
-        action="http://www.poi.com/api/import"
+        :action="action"
         :headers="myHeaders"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
@@ -27,6 +27,7 @@ export default {
             e_file: 'e_file',
             showProcess:0,
             processLength:0,
+            action:'http://poi.wstudio.top/api/import'
         };
     },
     methods: {
