@@ -1,7 +1,7 @@
 <template>
     <el-upload
         class="upload-demo"
-        action="http://www.poi.com/api/import"
+        action="/api/import"
         :headers="myHeaders"
         :on-preview="handlePreview"
         :on-remove="handleRemove"
