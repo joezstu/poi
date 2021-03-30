@@ -3544,7 +3544,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       },
       e_file: 'e_file',
       showProcess: 0,
-      processLength: 0
+      processLength: 0,
+      action: 'http://poi.wstudio.top/api/import'
     };
   },
   methods: {
@@ -64658,7 +64659,7 @@ var render = function() {
     {
       staticClass: "upload-demo",
       attrs: {
-        action: "/api/import",
+        action: _vm.action,
         headers: _vm.myHeaders,
         "on-preview": _vm.handlePreview,
         "on-remove": _vm.handleRemove,
