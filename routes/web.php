@@ -25,6 +25,7 @@ Route::prefix('api')->group(function () {
 
         //上传excel
     $file = Input::file('e_file');
+<<<<<<< HEAD
 
     $realPath = $file->store('temp');
 
@@ -64,17 +65,66 @@ Route::prefix('api')->group(function () {
 
         return json_encode($percent);
 
+=======
+
+    $realPath = $file->store('temp');
+
+    $res = Excel::import(new PoisImport, $realPath);
+
+        $pois = Pois::where('status','<>',1)->get();
+
+        if(!empty($pois)){
+            foreach($pois as $key => $value){
+
+                \App\Jobs\TestJob::dispatch($value);
+            }
+        }
+
+        return json_encode(DB::table('pois')->count());
+
+    return json_encode($res);
+>>>>>>> 21e1a79316d8ced72f5bcc7ac20fc5780a0085f6
     });
 
     Route::get('reset',function(){
 
+<<<<<<< HEAD
+=======
+    Route::get('output',function(){
+
+        return Excel::download(new PoisExport(), 'pois.xlsx');
+    });
+    Route::get('getPercent',function(){
+        $total = DB::table('pois')->count();
+        if( $total > 0){
+            $t1 = DB::table('pois')->where('status',1)->count();
+            $percent = $t1 * 100 / $total;
+            $percent = intval($percent);
+            if($percent < 1){
+                $percent = 1;
+            }
+        }else{
+            $percent = 0;
+        }
+
+        return json_encode($percent);
+
+    });
+
+    Route::get('reset',function(){
+
+>>>>>>> 21e1a79316d8ced72f5bcc7ac20fc5780a0085f6
         DB::table('pois')->truncate();
     });
 });
 
 
 Route::get('/{any}',function(){
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 21e1a79316d8ced72f5bcc7ac20fc5780a0085f6
     return view('welcome', ['name' => 'James']);
 })->where('any', '.*');
 //
