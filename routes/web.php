@@ -28,7 +28,7 @@ Route::prefix('api')->group(function () {
 
     $realPath = $file->store('temp');
 
-    $res = Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
+    $res = Excel::import(new PoisImport, $realPath);
 
         $pois = Pois::where('status','<>',1)->get();
 
@@ -74,7 +74,7 @@ Route::prefix('api')->group(function () {
 
 
 Route::get('/{any}',function(){
-
+    
     return view('welcome', ['name' => 'James']);
 })->where('any', '.*');
 //
