@@ -3545,7 +3545,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       e_file: 'e_file',
       showProcess: 0,
       processLength: 0,
-      action: 'http://poi.wstudio.top/api/import'
+      action: 'http://www.poi.com/api/import'
     };
   },
   methods: {
