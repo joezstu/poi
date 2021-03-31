@@ -43,35 +43,37 @@ class TestJob implements ShouldQueue
 
             $response = $client->request('GET', $url);
             $response = json_decode($response->getBody());
-            $response = $response->pois;
+            if(!empty($response->pois)){
+                $response = $response->pois;
 
-            if(isset($response[0]) && !empty($response[0])){
-                $value = $response[0];
+                if(isset($response[0]) && !empty($response[0])){
+                    $value = $response[0];
 
-                $url2 = "https://restapi.amap.com/v3/place/around?key=".$key."&location=".$value->location."&radius=10000&keywords=工商银行&sortrule=distance&offset=10&page=1";
+                    $url2 = "https://restapi.amap.com/v3/place/around?key=".$key."&location=".$value->location."&radius=10000&keywords=工商银行&sortrule=distance&offset=10&page=1";
 
-                $r = $client->request('GET', $url2);
-                $r = json_decode($r->getBody());
-                $r = $r->pois;
+                    $r = $client->request('GET', $url2);
+                    $r = json_decode($r->getBody());
+                    $r = $r->pois;
 
-                $string = '';
+                    $string = '';
 
-                foreach($r as $kk => $vv){
-                    $string .= $vv->name;
-                    $string .= ",";
+                    foreach($r as $kk => $vv){
+                        $string .= $vv->name ."-" . $vv->distance . '米';
+                        $string .= ",";
+                    }
+
+                    if(is_string($value->pname) && !empty($value->pname)){
+                        $this->poi->reference_address .= $value->pname;
+                    }
+                    if(is_string($value->cityname) && !empty($value->cityname)){
+                        $this->poi->reference_address .= $value->cityname;
+                    }
+                    if(is_string($value->address) && !empty($value->address)){
+                        $this->poi->reference_address .= $value->address;
+                    }
+
+                    $this->poi->result_data = $string;
                 }
-
-                if(is_string($value->pname) && !empty($value->pname)){
-                    $this->poi->reference_address .= $value->pname;
-                }
-                if(is_string($value->cityname) && !empty($value->cityname)){
-                    $this->poi->reference_address .= $value->cityname;
-                }
-                if(is_string($value->address) && !empty($value->address)){
-                    $this->poi->reference_address .= $value->address;
-                }
-
-                $this->poi->result_data = $string;
             }
 
             $this->poi->status = 1;

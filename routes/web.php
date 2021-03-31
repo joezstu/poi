@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Exports\PoisExport;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -21,10 +23,6 @@ use App\Pois;
 Route::prefix('api')->group(function () {
     Route::post('import', function () {
 
-//        $pois = new Pois();
-//
-//        DB::table('pois')->truncate();
-//
         //上传excel
     $file = Input::file('e_file');
 
@@ -32,10 +30,6 @@ Route::prefix('api')->group(function () {
 
     $res = Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
 
-    return json_encode($res);
-    });
-
-    Route::get('update',function(){
         $pois = Pois::where('status','<>',1)->get();
 
         if(!empty($pois)){
@@ -44,11 +38,43 @@ Route::prefix('api')->group(function () {
                 \App\Jobs\TestJob::dispatch($value);
             }
         }
+
+        return json_encode(DB::table('pois')->count());
+
+    return json_encode($res);
+    });
+
+
+    Route::get('output',function(){
+
+        return Excel::download(new PoisExport(), 'pois.xlsx');
+    });
+    Route::get('getPercent',function(){
+        $total = DB::table('pois')->count();
+        if( $total > 0){
+            $t1 = DB::table('pois')->where('status',1)->count();
+            $percent = $t1 * 100 / $total;
+            $percent = intval($percent);
+            if($percent < 1){
+                $percent = 1;
+            }
+        }else{
+            $percent = 0;
+        }
+
+        return json_encode($percent);
+
+    });
+
+    Route::get('reset',function(){
+
+        DB::table('pois')->truncate();
     });
 });
 
 
 Route::get('/{any}',function(){
+
     return view('welcome', ['name' => 'James']);
 })->where('any', '.*');
 //
