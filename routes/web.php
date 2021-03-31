@@ -26,9 +26,7 @@ Route::prefix('api')->group(function () {
         //上传excel
     $file = Input::file('e_file');
 
-    $realPath = $file->store('temp');
-
-    $res = Excel::import(new PoisImport, $realPath);
+    $res = Excel::import(new PoisImport, $file);
 
         $pois = Pois::where('status','<>',1)->get();
 
