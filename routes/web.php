@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use App\Exports\PoisExport;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Imports\PoisImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,34 +23,58 @@ use App\Pois;
 Route::prefix('api')->group(function () {
     Route::post('import', function () {
 
-//        $pois = new Pois();
-//
-//        DB::table('pois')->truncate();
-//
-//        //上传excel
-//    $file = Input::file('e_file');
+        //上传excel
+    $file = Input::file('e_file');
 
-//    $realPath = $file->store('temp');
+    $realPath = $file->store('temp');
 
-        $arr = [
-            [
-                'name'  =>  '张三',
-            ],
-            [
-                'name'  =>  '李四'
-            ]
-        ];
+    $res = Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
 
-        return json_encode($arr);
+        $pois = Pois::where('status','<>',1)->get();
 
-    Excel::import(new PoisImport, storage_path('app') . '/' . $realPath);
+        if(!empty($pois)){
+            foreach($pois as $key => $value){
+
+                \App\Jobs\TestJob::dispatch($value);
+            }
+        }
+
+        return json_encode(DB::table('pois')->count());
+
+    return json_encode($res);
     });
 
 
+    Route::get('output',function(){
+
+        return Excel::download(new PoisExport(), 'pois.xlsx');
+    });
+    Route::get('getPercent',function(){
+        $total = DB::table('pois')->count();
+        if( $total > 0){
+            $t1 = DB::table('pois')->where('status',1)->count();
+            $percent = $t1 * 100 / $total;
+            $percent = intval($percent);
+            if($percent < 1){
+                $percent = 1;
+            }
+        }else{
+            $percent = 0;
+        }
+
+        return json_encode($percent);
+
+    });
+
+    Route::get('reset',function(){
+
+        DB::table('pois')->truncate();
+    });
 });
 
 
 Route::get('/{any}',function(){
+
     return view('welcome', ['name' => 'James']);
 })->where('any', '.*');
 //

@@ -3514,6 +3514,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 //
@@ -3535,6 +3537,33 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -3545,7 +3574,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       e_file: 'e_file',
       showProcess: 0,
       processLength: 0,
-      action: 'http://poi.wstudio.top/api/import'
+      action: 'http://poi.wstudio.top/api/import',
+      showOutput: 1,
+      percent: 0,
+      able: false,
+      canExport: false,
+      showProgress: false,
+      buttonContent: '点击上传',
+      isLoading: false
     };
   },
   methods: {
@@ -3556,7 +3592,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       console.log(file);
     },
     handleExceed: function handleExceed(files, fileList) {
-      this.$message.warning('已上传');
+      this.$message.warning('正在上传');
     },
     beforeRemove: function beforeRemove(file, fileList) {
       return this.$confirm("\u786E\u5B9A\u79FB\u9664 ".concat(file.name, "\uFF1F"));
@@ -3565,12 +3601,48 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       console.log(res);
     },
     handleChange: function handleChange(file, fileList) {
-      file.percentage = 50;
+      this.showProgress = true;
+      this.able = true;
+      this.buttonContent = '正在处理';
+      this.isLoading = true;
       console.log(999, this, file, fileList);
     },
     handleSuccess: function handleSuccess(res, file, fileList) {
       console.log(123, _typeof(res), res, file, fileList);
+    },
+    re_load_page: function re_load_page() {
+      this.showProgress = false;
+      this.able = false;
+      location.reload();
     }
+  },
+  mounted: function mounted() {
+    console.log(888);
+
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://poi.wstudio.top/api/reset').then(function (response) {
+      _this.timer = setInterval(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://poi.wstudio.top/api/getPercent').then(function (response) {
+          _this.percent = response.data;
+          console.log(888, response);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+
+        if (_this.percent == '100') {
+          _this.canExport = true;
+          _this.buttonContent = '处理完成';
+          _this.isLoading = false;
+          clearInterval(_this.timer);
+        }
+      }, 1000);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  },
+  beforeDestroy: function beforeDestroy() {
+    clearInterval(this.timer);
   }
 });
 
@@ -64655,27 +64727,96 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "el-upload",
-    {
-      staticClass: "upload-demo",
-      attrs: {
-        action: _vm.action,
-        headers: _vm.myHeaders,
-        "on-preview": _vm.handlePreview,
-        "on-remove": _vm.handleRemove,
-        "before-remove": _vm.beforeRemove,
-        limit: 1,
-        name: _vm.e_file,
-        showProcess: 1,
-        "on-exceed": _vm.handleExceed,
-        "on-change": _vm.handleChange,
-        "on-success": _vm.handleSuccess,
-        "file-list": _vm.fileList
-      }
-    },
+    "div",
     [
-      _c("el-button", { attrs: { size: "small", type: "primary" } }, [
-        _vm._v("点击上传")
+      _c(
+        "el-row",
+        [
+          _c(
+            "el-col",
+            { attrs: { span: 24 } },
+            [
+              _c(
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: _vm.action,
+                    headers: _vm.myHeaders,
+                    "on-preview": _vm.handlePreview,
+                    "on-remove": _vm.handleRemove,
+                    "before-remove": _vm.beforeRemove,
+                    limit: 1,
+                    name: _vm.e_file,
+                    showProcess: 1,
+                    "on-exceed": _vm.handleExceed,
+                    "on-change": _vm.handleChange,
+                    "on-success": _vm.handleSuccess,
+                    disabled: _vm.able,
+                    "file-list": _vm.fileList
+                  }
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: {
+                        size: "small",
+                        type: "primary",
+                        loading: _vm.isLoading
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.buttonContent))]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-row",
+        [
+          _vm.showProgress
+            ? _c("el-progress", {
+                attrs: {
+                  "text-inside": true,
+                  "stroke-width": 26,
+                  percentage: _vm.percent
+                }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("el-row", [
+        _vm.canExport
+          ? _c(
+              "a",
+              {
+                attrs: {
+                  type: "button",
+                  href: "http://poi.wstudio.top/api/output/",
+                  download: "file.xlsx"
+                }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.re_load_page }
+                  },
+                  [_vm._v("\n                导出excel\n            ")]
+                )
+              ]
+            )
+          : _vm._e()
       ])
     ],
     1
