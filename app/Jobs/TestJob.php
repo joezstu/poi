@@ -54,25 +54,27 @@ class TestJob implements ShouldQueue
                     $r = $client->request('GET', $url2);
                     $r = json_decode($r->getBody());
                     $r = $r->pois;
+                    if(isset($r) && !empty($r)){
 
-                    $string = '';
+                        $string = '';
 
-                    foreach($r as $kk => $vv){
-                        $string .= $vv->name ."-" . (is_string($vv->address) ? $vv->address : '无') . '-' . $vv->distance . '米';
-                        $string .= "\n";
-                    }
+                        foreach($r as $kk => $vv){
+                            $string .= $vv->name ."-" . (is_string($vv->address) ? $vv->address : '无') . '-' . $vv->distance . '米';
+                            $string .= "\n";
+                        }
 
-                    if(is_string($value->pname) && !empty($value->pname)){
-                        $this->poi->reference_address .= $value->pname;
-                    }
-                    if(is_string($value->cityname) && !empty($value->cityname)){
-                        $this->poi->reference_address .= $value->cityname;
-                    }
-                    if(is_string($value->address) && !empty($value->address)){
-                        $this->poi->reference_address .= $value->address;
-                    }
+                        if(is_string($value->pname) && !empty($value->pname)){
+                            $this->poi->reference_address .= $value->pname;
+                        }
+                        if(is_string($value->cityname) && !empty($value->cityname)){
+                            $this->poi->reference_address .= $value->cityname;
+                        }
+                        if(is_string($value->address) && !empty($value->address)){
+                            $this->poi->reference_address .= $value->address;
+                        }
 
-                    $this->poi->result_data = $string;
+                        $this->poi->result_data = $string;
+                    }
                 }
             }
 
