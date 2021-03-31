@@ -58,8 +58,8 @@ class TestJob implements ShouldQueue
                     $string = '';
 
                     foreach($r as $kk => $vv){
-                        $string .= $vv->name ."-" . $vv->distance . '米';
-                        $string .= ",";
+                        $string .= $vv->name ."-" . $vv->address . '-' . $vv->distance . '米';
+                        $string .= "\n";
                     }
 
                     if(is_string($value->pname) && !empty($value->pname)){
