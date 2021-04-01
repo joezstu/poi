@@ -1,6 +1,19 @@
 <template>
     <div>
         <el-row>
+            <a
+                type="button"
+                href="http://poi.wstudio.top/template.xlsx"
+                download="template.xlsx"
+            >
+                <button
+                    class="btn btn-primary"
+                >
+                    格式模板
+                </button>
+            </a>
+        </el-row>
+        <el-row>
             <el-col :span="24">
                 <el-upload
                     class="upload-demo"
@@ -40,6 +53,7 @@
                 </button>
             </a>
         </el-row>
+
     </div>
 
 </template>

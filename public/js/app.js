@@ -3563,6 +3563,20 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -64729,6 +64743,24 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("el-row", [
+        _c(
+          "a",
+          {
+            attrs: {
+              type: "button",
+              href: "http://poi.wstudio.top/template.xlsx",
+              download: "template.xlsx"
+            }
+          },
+          [
+            _c("button", { staticClass: "btn btn-primary" }, [
+              _vm._v("\n                格式模板\n            ")
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
       _c(
         "el-row",
         [
