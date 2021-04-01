@@ -60,7 +60,7 @@ class TestJob implements ShouldQueue
 
                         foreach($r as $kk => $vv){
                             if(is_object($vv)){
-                                $string .= $vv->name ."-" . ((isset($vv->address) && is_string($vv->address)) ? $vv->address : '无') . '-' . $vv->distance . '米';
+                                $string .= $vv->name ."-" . ((property_exists($vv,'address') && is_string($vv->address)) ? $vv->address : '无') . '-' . $vv->distance . '米';
                                 $string .= "\n";
                             }
                         }
