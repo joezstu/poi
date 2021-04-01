@@ -54,7 +54,7 @@ class TestJob implements ShouldQueue
                     $r = $client->request('GET', $url2);
                     $r = json_decode($r->getBody());
                     $r = $r->pois;
-                    if(isset($r) && !empty($r)){
+                    if(isset($r) && !empty($r) && is_object($r)){
 
                         $string = '';
 
