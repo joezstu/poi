@@ -17,8 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from . import views
+from . import importExcel
+from . import token
+from . import cc
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('import/', importExcel.import_excel),
+    path('token/', token.token),
+    path('cc/', cc.bc),
     url(r'^$', views.hello),
 ]
