@@ -8374,3 +8374,4 @@ INFO 2021-04-05 12:38:16,966 tasks 52 地址："韶关市曲江区乌石镇韶�
 INFO 2021-04-05 12:38:17,221 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 156
 INFO 2021-04-05 12:43:46,582 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/pyApi/settings.py changed, reloading.
 INFO 2021-04-05 12:43:47,489 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-05 15:27:13,905 autoreload 617 Watching for file changes with StatReloader
