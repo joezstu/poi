@@ -21,7 +21,7 @@ def downloadExcel(request):
 
     # 是否生成处理后的excel文件保存在服务器
     new_excel = cache.get(job_name + '-new')
-    has_file = os.path.exists('upload/'+new_excel)
+    has_file = os.path.exists('upload/' + new_excel)
 
     if percent == 100:
         arr = cache.keys(job_name + '_*')
@@ -35,12 +35,19 @@ def downloadExcel(request):
         data2.update({
             'sheet1': data
         })
-        save_data('upload/'+new_excel, data)
+        save_data('upload/' + new_excel, data)
 
     if has_file:
         has_file = True
 
     return JsonResponse({
         'percent': percent,
-        'has_file': has_file
+        'has_file': has_file,
+        'fileName': cache.get(job_name + '-file'),
+        'recordTotal': cache.get(job_name + '-total'),
+        'recordHandle': cache.get(job_name + '-job'),
+        'successRecord': cache.get(job_name + '-success'),
+        'errorRecord': cache.get(job_name + '-error'),
+        'handlePercent': int(cache.get(job_name + '-success') * 100 / cache.get(job_name + '-total')),
+
     })

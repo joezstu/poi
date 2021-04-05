@@ -28,7 +28,7 @@ SECRET_KEY = 'ump%z+ulc-(k)ep+2_zv0sh#md^be&8%1n%d-be0=yyp8hez*k'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'py.poi.com'
+    '*'
 ]
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",

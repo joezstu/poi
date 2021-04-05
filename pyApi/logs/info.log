@@ -8343,3 +8343,34 @@ INFO 2021-04-05 01:39:59,179 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 34
 INFO 2021-04-05 01:40:00,615 basehttp 157 "GET /cc/ HTTP/1.1" 200 25
 INFO 2021-04-05 01:40:00,764 basehttp 157 "GET /upload/4gcdZt_20210405013957.xls HTTP/1.1" 200 22016
 INFO 2021-04-05 01:40:30,787 basehttp 157 "GET /token/ HTTP/1.1" 200 77
+INFO 2021-04-05 12:16:44,212 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-05 12:34:49,703 basehttp 157 "GET /token/ HTTP/1.1" 200 77
+INFO 2021-04-05 12:35:05,092 basehttp 157 "POST /import/ HTTP/1.1" 200 2
+INFO 2021-04-05 12:35:05,395 tasks 52 地址："韶关市曲江区乌石镇韶关粤江发电有限责任公司医务大楼102房"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:35:05,502 tasks 52 地址："企业地址"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:35:05,515 tasks 52 地址："英德市英红镇广东顺德清远经济合作区内武广高铁与昆汕高速交叉口的东侧位置"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:35:05,868 tasks 86 地址："津南区葛沽镇冶金工业园区"的周边搜索API返回的银行地址没有address字段
+INFO 2021-04-05 12:35:06,160 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 154
+INFO 2021-04-05 12:35:07,122 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 153
+INFO 2021-04-05 12:35:57,009 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/job/views.py changed, reloading.
+INFO 2021-04-05 12:35:57,905 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-05 12:36:00,037 basehttp 157 "GET /token/ HTTP/1.1" 200 77
+INFO 2021-04-05 12:36:03,525 basehttp 157 "POST /import/ HTTP/1.1" 200 2
+INFO 2021-04-05 12:36:03,710 tasks 52 地址："韶关市曲江区乌石镇韶关粤江发电有限责任公司医务大楼102房"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:36:03,837 tasks 52 地址："企业地址"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:36:03,910 tasks 52 地址："英德市英红镇广东顺德清远经济合作区内武广高铁与昆汕高速交叉口的东侧位置"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:36:04,276 tasks 86 地址："津南区葛沽镇冶金工业园区"的周边搜索API返回的银行地址没有address字段
+INFO 2021-04-05 12:36:04,587 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 155
+INFO 2021-04-05 12:36:05,565 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 154
+INFO 2021-04-05 12:38:05,190 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/pyApi/importExcel.py changed, reloading.
+INFO 2021-04-05 12:38:06,078 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-05 12:38:10,972 basehttp 157 "GET /token/ HTTP/1.1" 200 77
+INFO 2021-04-05 12:38:15,174 basehttp 157 "POST /import/ HTTP/1.1" 200 2
+INFO 2021-04-05 12:38:15,504 tasks 52 地址："企业地址"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:38:16,091 tasks 52 地址："英德市英红镇广东顺德清远经济合作区内武广高铁与昆汕高速交叉口的东侧位置"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:38:16,299 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 157
+INFO 2021-04-05 12:38:16,433 tasks 86 地址："津南区葛沽镇冶金工业园区"的周边搜索API返回的银行地址没有address字段
+INFO 2021-04-05 12:38:16,966 tasks 52 地址："韶关市曲江区乌石镇韶关粤江发电有限责任公司医务大楼102房"的关键词API返回的数据没有参考地址
+INFO 2021-04-05 12:38:17,221 basehttp 157 "GET /job/handle/ HTTP/1.1" 200 156
+INFO 2021-04-05 12:43:46,582 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/pyApi/settings.py changed, reloading.
+INFO 2021-04-05 12:43:47,489 autoreload 617 Watching for file changes with StatReloader

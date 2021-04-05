@@ -3,7 +3,7 @@
     <el-row type="flex" justify="end">
       <el-col :span="22"></el-col>
       <el-col :span="2">
-        <a style="color:#409eff" href="http://api.poi.wstudio.top:39002/upload/template.xlsx">模板文件</a>
+        <a style="color:#409eff" :href="templateUrl">模板文件</a>
       </el-col>
     </el-row>
     <el-row type="flex" justify="center">
@@ -42,22 +42,17 @@
     <div v-if="showPanel" style="background-color:#2C2C2E;width:500px;height:250px;border-radius: 10px;position:relative;top:-30px;margin:auto">
       <el-progress :text-inside="true" :stroke-width="20" :percentage="percent" style="width:95%;position:relative;top:20px;left:10px"></el-progress>
       <div style="margin-top:50px;color:white;">
-        <div style="display: inline-block;width:150px">文件名 ：excel.xlsx</div>
-        <div style="display: inline-block;width:150px">记录总数：4000</div>
-        <div style="display: inline-block;width:150px">有返回数据：2000</div>
+        <div style="display: inline-block;width:150px">文件名 ：{{fileName}}</div>
+        <div style="display: inline-block;width:150px">记录总数：{{recordTotal}}</div>
+        <div style="display: inline-block;width:150px">已处理：{{recordHandle}}</div>
       </div>
       <div style="margin-top:10px;color:white;">
-        <div style="display: inline-block;width:150px">成功记录：excel.xlsx</div>
-        <div style="display: inline-block;width:150px">失败记录：1000</div>
-        <div style="display: inline-block;width:150px">无返回数据：1000</div>
-
-      </div>
-      <div style="margin-top:10px;color:white;">
-        <div style="display: inline-block;width:150px">处理效率：75%</div>
-        <div style="display: inline-block;width:150px">实际效率：50%</div>
-      </div>
+        <div style="display: inline-block;width:150px">成功记录：{{successRecord}}</div>
+        <div style="display: inline-block;width:150px">失败记录：{{errorRecord}}</div>
+        <div style="display: inline-block;width:150px">处理效率:{{handlePercent}}%</div>
       <div>
         <el-button size="small" type="primary" style="width:200px;margin-top:40px" @click="exportExcel" :loading="has_file">导出数据</el-button>
+      </div>
       </div>
     </div>
     </transition>
@@ -70,14 +65,20 @@ import axios from "axios";
 export default {
   data() {
     return {
-            importApi : '/api/import/',
-            myHeaders : {},
-            percent:1,//数据处理进度
-            has_file:true,//服务器是否已经存储处理后的excel文件
-            showPanel:false,//是否显示数据面板
-            fileList:[],
-
-          };
+      importApi : '/api/import/',
+      myHeaders : {},
+      percent:1,//数据处理进度
+      has_file:true,//服务器是否已经存储处理后的excel文件
+      showPanel:false,//是否显示数据面板
+      fileList:[],
+      templateUrl:this._global.apiUrl + 'upload/template.xlsx',
+      fileName:'',
+      recordTotal:0,
+      recordHandle:0,
+      successRecord:0,
+      errorRecord:0,
+      handlePercent:0
+    };
   },
   methods: {
     handleRemove(file, fileList) {
@@ -101,6 +102,12 @@ export default {
       const tmp = setInterval(function(){
         axios.get('/api/job/handle/').then((res)=>{
           _this.percent = res.data.percent
+          _this.fileName = res.data.fileName
+          _this.recordTotal = res.data.recordTotal
+          _this.recordHandle = res.data.recordHandle
+          _this.successRecord = res.data.successRecord
+          _this.errorRecord = res.data.errorRecord
+          _this.handlePercent = res.data.handlePercent
 
           if(res.data.has_file){
             _this.has_file = false
@@ -134,18 +141,8 @@ export default {
     this.axios.get('/api/token/').then((res)=>{
 
       this.myHeaders = {"X-CSRFToken":res.data.token}
-      //
-      // this.axios({
-      //   url:'api/import/',
-      //   method:'post',
-      //   headers: {
-      //     'X-CSRFToken': res.data.token
-      //   }
-      // }).then((res)=>{
-      //   console.log(res)
-      // })
+
     })
-    console.log('888',this._global.apiUrl)
   }
 }
 </script>

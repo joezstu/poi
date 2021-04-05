@@ -1,8 +1,10 @@
 # el-poi
 
-## Project setup
+## 打包
 ```
-yarn install
+修改src/components/Common.vue的api域名
+修改vue.config.js的跨域路径
+命令行运行yarn build
 ```
 
 ### Compiles and hot-reloads for development

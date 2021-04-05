@@ -23,7 +23,7 @@ def import_excel(request):
     cache_time: int = 24 * 60 * 60
 
     # 文件名
-    cache.set(job_name + '-file', job_name, cache_time)
+    cache.set(job_name + '-file', handle.name, cache_time)
     # 处理后的文件名，包括路径（相对根目录）
     cache.set(job_name + '-new', job_name + '_' + time.strftime('%Y%m%d%H%M%S') + '.xls', cache_time)
     # excel文件总记录数
