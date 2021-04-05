@@ -26,6 +26,7 @@
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
             :on-success="handleImportSuccess"
+            name="excel_file"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
@@ -38,7 +39,7 @@
     </el-row>
 
     <div style="background-color:#2C2C2E;width:500px;height:250px;border-radius: 10px;position:relative;top:-30px;margin:auto">
-      <el-progress :text-inside="true" :stroke-width="20" :percentage="70" style="width:95%;position:relative;top:20px;left:10px"></el-progress>
+      <el-progress :text-inside="true" :stroke-width="20" :percentage="percent" style="width:95%;position:relative;top:20px;left:10px"></el-progress>
       <div style="margin-top:50px;color:white;">
         <div style="display: inline-block;width:150px">文件名 ：excel.xlsx</div>
         <div style="display: inline-block;width:150px">记录总数：4000</div>
@@ -55,18 +56,22 @@
         <div style="display: inline-block;width:150px">实际效率：50%</div>
       </div>
       <div>
-        <el-button size="small" type="primary" style="width:200px;margin-top:40px">导出数据</el-button>
+        <el-button size="small" type="primary" style="width:200px;margin-top:40px" @click="exportExcel" :loading="has_file">导出数据</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
             importApi : '/api/import/',
-            myHeaders : {}
+            myHeaders : {},
+            percent:1,
+            has_file:true
           };
   },
   methods: {
@@ -83,7 +88,30 @@ export default {
       return this.$confirm(`确定移除 ${ file.name }？`);
     },
     handleImportSuccess(res){
+      var _this = this
+      const tmp = setInterval(function(){
+        axios.get('/api/job/handle/').then((res)=>{
+          _this.percent = res.data.percent
+
+          if(res.data.has_file){
+            _this.has_file = false
+            console.log('关闭定时任务')
+            clearInterval(tmp)
+          }
+        })
+      },1000)
       console.log(res)
+    },
+    exportExcel(e){
+      axios.get('/api/cc/').then((res)=>{
+        const file_name = res.data
+
+        const a = document.createElement('a');
+        a.setAttribute('href', this._global.apiUrl + 'upload/'+file_name);
+        document.body.appendChild(a);
+        a.click();
+      })
+      console.log(e)
     }
   },
   mounted() {

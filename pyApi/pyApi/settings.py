@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import djcelery
+from celery.schedules import timedelta, crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -30,6 +31,8 @@ ALLOWED_HOSTS = [
     'py.poi.com'
 ]
 
+FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
+                        "django_excel.TemporaryExcelFileUploadHandler")
 
 # Application definition
 
@@ -40,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
+    # 'djcelery'
 ]
 
 MIDDLEWARE = [
@@ -74,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pyApi.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -84,7 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -104,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -118,11 +119,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/upload/'
 #
 # CORS_ORIGIN_ALLOW_ALL = False
 # CORS_ALLOW_CREDENTIALS = True
@@ -137,3 +137,68 @@ STATIC_URL = '/static/'
 
 # 改变你的表单指向py.poi.com:8000/import/(注意末尾的斜杠)，或者在Django设置中设置APPEND_SLASH=False。
 APPEND_SLASH = True
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+# 使用redis代理来分发任务
+# BROKER_URL = 'redis://127.0.0.1:6379/8'
+# CELERY_IMPORTS = ('CeleryTask.tasks')  # 导入任务，可以执行的异步任务
+# CELERY_TIMEZONE = 'Asia/Shanghai'  # 中国时区
+# CELERYBEAT_SCHEDULER='djcelery.schduler.DatabaseScheduler'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False if DEBUG else True,  # 是否禁用已经存在的日志器
+    'formatters': {  # 日志信息显示的格式
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(lineno)s %(message)s'
+            # "class": "pythonjsonlogger.jsonlogger.JsonFormatter"
+        },
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(funcName)s %(lineno)d %(message)s'
+            # "class": "pythonjsonlogger.jsonlogger.JsonFormatter"
+        },  # 日志记录级别+时间日期+模块名称+函数名称+行号+记录消息
+    },
+    'filters': {  # 对日志进行过滤
+        'require_debug_true': {  # django在debug模式下才输出日志
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {  # 日志处理方法
+        'console': {  # 向终端中输出日志
+            'level': 'DEBUG' if DEBUG else 'INFO',
+            'filters': ['require_debug_true'],  # debug为true才会输出
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'info': {  # 向文件中输出日志
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(str(BASE_DIR) + '/logs/', "info.log"),  # 日志文件的位置
+            'maxBytes': 300 * 1024 * 1024,  # 300M大小
+            'backupCount': 10,
+            'formatter': 'verbose',
+            'encoding': 'utf-8'
+        },
+
+
+    },
+    'loggers': {  # 日志器
+        "django": {  # 默认的logger应用如下配置
+            "handlers": ["info", "console"],
+            "propagate": True,
+            "level": "INFO"
+        },
+
+    }
+}
+
+STATICFILES_DIRS = (('upload',os.path.join(BASE_DIR, 'upload/')))

@@ -14,17 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
 from django.conf.urls import url
 from . import views
 from . import importExcel
 from . import token
 from . import cc
+from job import urls as job_urls
 
-urlpatterns = [
+urlpatterns = {
     path('admin/', admin.site.urls),
     path('import/', importExcel.import_excel),
     path('token/', token.token),
     path('cc/', cc.bc),
+    path('job/', include(job_urls)),
     url(r'^$', views.hello),
-]
+}

@@ -1,0 +1,4 @@
+INFO 2021-04-04 08:50:12,082 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-04 08:50:31,653 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/pyApi/settings.py changed, reloading.
+INFO 2021-04-04 08:50:51,691 autoreload 617 Watching for file changes with StatReloader
+INFO 2021-04-04 08:51:00,265 autoreload 240 /Users/cenglingwen/Projects/poi/pyApi/pyApi/settings.py changed, reloading.
