@@ -9,10 +9,8 @@
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/vue-loader/83b889a44a34ebdfff8c5059bb0f436e.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/vue-loader/83b889a44a34ebdfff8c5059bb0f436e.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.cache/vue-loader/c9f88999c47edbcf0d989576a2f474c0.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.cache/vue-loader/c9f88999c47edbcf0d989576a2f474c0.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyApi/pyApi/cc.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyApi/pyApi/cc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyApi/pyApi/importExcel.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyApi/pyApi/importExcel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyApi/logs/info.log" beforeDir="false" afterPath="$PROJECT_DIR$/../pyApi/logs/info.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pyApi/pyApi/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyApi/pyApi/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyApi/pyApi/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyApi/pyApi/urls.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +59,7 @@
       <option name="presentableId" value="Default" />
       <updated>1617413943447</updated>
       <workItem from="1617413946904" duration="18000" />
-      <workItem from="1617414095368" duration="26492000" />
+      <workItem from="1617414095368" duration="28432000" />
     </task>
     <servers />
   </component>

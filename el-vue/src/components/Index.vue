@@ -3,7 +3,7 @@
     <el-row type="flex" justify="end">
       <el-col :span="22"></el-col>
       <el-col :span="2">
-        <a style="color:#409eff" href="#">模板文件</a>
+        <a style="color:#409eff" href="http://py.poi.com:8000/upload/template.xlsx">模板文件</a>
       </el-col>
     </el-row>
     <el-row type="flex" justify="center">
@@ -22,23 +22,24 @@
             class="upload-demo"
             :action="importApi"
             :headers="myHeaders"
+            :file-list="fileList"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
             :on-success="handleImportSuccess"
             name="excel_file"
-            multiple
-            :limit="3"
+            :limit="1"
             :on-exceed="handleExceed"
             style="position:relative;top:-60px"
         >
-          <el-button size="small" type="primary" style="width:200px">点击上传Excel文件</el-button>
+          <el-button size="small" type="primary" style="width:200px" @click="reset">点击上传Excel文件</el-button>
           <div slot="tip" class="el-upload__tip">只能上传excel文件，且不超过10M</div>
         </el-upload>
       </el-col>
     </el-row>
 
-    <div style="background-color:#2C2C2E;width:500px;height:250px;border-radius: 10px;position:relative;top:-30px;margin:auto">
+    <transition name="el-zoom-in-center">
+    <div v-if="showPanel" style="background-color:#2C2C2E;width:500px;height:250px;border-radius: 10px;position:relative;top:-30px;margin:auto">
       <el-progress :text-inside="true" :stroke-width="20" :percentage="percent" style="width:95%;position:relative;top:20px;left:10px"></el-progress>
       <div style="margin-top:50px;color:white;">
         <div style="display: inline-block;width:150px">文件名 ：excel.xlsx</div>
@@ -59,6 +60,7 @@
         <el-button size="small" type="primary" style="width:200px;margin-top:40px" @click="exportExcel" :loading="has_file">导出数据</el-button>
       </div>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -70,8 +72,11 @@ export default {
     return {
             importApi : '/api/import/',
             myHeaders : {},
-            percent:1,
-            has_file:true
+            percent:1,//数据处理进度
+            has_file:true,//服务器是否已经存储处理后的excel文件
+            showPanel:false,//是否显示数据面板
+            fileList:[],
+
           };
   },
   methods: {
@@ -81,14 +86,18 @@ export default {
     handlePreview(file) {
       console.log(file);
     },
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    handleExceed() {
+      this.$message.warning('已上传');
     },
     beforeRemove(file) {
       return this.$confirm(`确定移除 ${ file.name }？`);
     },
     handleImportSuccess(res){
       var _this = this
+
+      //显示数据面板
+      _this.showPanel = true
+
       const tmp = setInterval(function(){
         axios.get('/api/job/handle/').then((res)=>{
           _this.percent = res.data.percent
@@ -110,8 +119,15 @@ export default {
         a.setAttribute('href', this._global.apiUrl + 'upload/'+file_name);
         document.body.appendChild(a);
         a.click();
+
       })
       console.log(e)
+    },
+    reset(){
+      //重置数据面板
+      this.fileList = []
+      this.percent = 0
+      this.has_file = true
     }
   },
   mounted() {
