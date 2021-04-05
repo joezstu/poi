@@ -3,7 +3,7 @@
     <el-row type="flex" justify="end">
       <el-col :span="22"></el-col>
       <el-col :span="2">
-        <a style="color:#409eff" href="http://py.poi.com:8000/upload/template.xlsx">模板文件</a>
+        <a style="color:#409eff" href="http://api.poi.wstudio.top:39002/upload/template.xlsx">模板文件</a>
       </el-col>
     </el-row>
     <el-row type="flex" justify="center">

@@ -1,6 +1,7 @@
 <script type="text/javascript">
 // 定义一些公共的属性和方法
-const apiUrl = 'http://py.poi.com:8000/'
+// const apiUrl = 'http://py.poi.com:8000/'
+const apiUrl = 'http://api.poi.wstudio.top:39002/'
 function commonFun() {
   console.log("公共方法")
 }
